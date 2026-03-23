@@ -1,0 +1,45 @@
+# ===== JAVA / MAVEN =====
+target/
+*.class
+*.jar
+*.war
+*.ear
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ===== SPRING BOOT =====
+*.log
+logs/
+spring-shell.log
+
+# ===== INTELLIJ =====
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ===== VSCODE =====
+.vscode/
+*.code-workspace
+
+# ===== ECLIPSE =====
+.eclipse/
+.classpath
+.project
+.settings/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== DOCKER =====
+.docker/
+
+# ===== SECRETOS — NUNCA subir esto =====
+*.env
+.env
+.env.local
+application-local.yml
+application-secrets.yml
+secrets/

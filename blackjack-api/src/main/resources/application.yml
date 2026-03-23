@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: blackjack-api
+
+  # MongoDB ? desactivado hasta Meta 0.3
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/blackjack}
+      auto-index-creation: true
+
+  # R2DBC MySQL ? desactivado hasta Meta 0.3
+  r2dbc:
+    url: ${R2DBC_URL:r2dbc:mysql://localhost:3306/blackjack_players}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:secret}
+
+  # Evita que falle al arrancar sin las BBDDs (hasta Meta 0.3)
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration
+      - org.springframework.boot.autoconfigure.mongo.ReactiveMongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.mongo.ReactiveMongoRepositoriesAutoConfiguration
+
+server:
+  port: ${PORT:8080}
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:local-dev-secret-key-min-256-bits-placeholder}
+  expiration: 86400000
+
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    com.blackjack: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss} [%thread] %-5level %logger{36} ? %msg%n"
