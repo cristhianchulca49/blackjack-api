@@ -3,8 +3,9 @@ package com.blackjack.game.domain.model;
 import com.blackjack.game.domain.model.valueObject.Deck;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
 
-import java.util.List;
 import java.util.UUID;
+
+import static com.blackjack.game.domain.model.valueObject.GameStatus.*;
 
 public class Game {
     private String id;
@@ -23,12 +24,15 @@ public class Game {
         this.status = status;
     }
 
-    public static Game create(String playerId) {
-        String id = UUID.randomUUID().toString();
-        Deck deck = Deck.fullShuffled();
-        Hand dealerHand = Hand.of(List.of(deck.deal(), deck.deal()));
-        Hand playerHand = Hand.of(List.of(deck.deal(), deck.deal()));
-        return new Game(id, playerId, dealerHand, playerHand, deck, GameStatus.IN_PROGRESS);
+    public static Game create(String playerId, Hand playerHand,
+                              Hand dealerHand, Deck deck) {
+        return new Game(
+                UUID.randomUUID().toString(),
+                playerId,
+                playerHand,
+                dealerHand,
+                deck,
+                GameStatus.IN_PROGRESS);
     }
 
     public String getId() {

@@ -22,10 +22,18 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public Card deal() {
+    public DealResult deal(int count) {
         if (cards.isEmpty()) {
             throw new IllegalStateException("Deck is empty");
         }
-        return cards.removeFirst();
+        if (count > cards.size()) {
+            throw new IllegalArgumentException("Not enough cards in deck: requested " + count + ", available " + cards.size());
+        }
+        List<Card> dealtCards = cards.subList(0, count);
+        List<Card> remaining = cards.subList(count, cards.size());
+        return new DealResult(dealtCards, new Deck(remaining));
+    }
+
+    public record DealResult(List<Card> cards, Deck remainingDeck) {
     }
 }
