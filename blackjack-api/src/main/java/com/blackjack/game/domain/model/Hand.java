@@ -3,7 +3,6 @@ package com.blackjack.game.domain.model;
 import com.blackjack.game.domain.model.valueObject.Card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -13,18 +12,21 @@ public class Hand {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static Hand of(List<Card> cards) {
-        if(cards.isEmpty()){
-            throw new IllegalArgumentException("Cards cannot be empty");
+    public static Hand of(Card card1, Card card2) {
+        if (card1 == null || card2 == null) {
+            throw new IllegalArgumentException("Cards cannot be null");
         }
-        return new Hand(cards);
+        if(card1.equals(card2)) {
+            throw new IllegalArgumentException("Cards cannot be the same");
+        }
+        return new Hand(List.of(card1, card2));
     }
 
     public Hand addCard(Card card) {
-        if(card == null){
+        if (card == null) {
             throw new IllegalArgumentException("Card cannot be null");
         }
-        if(cards.contains(card)){
+        if (cards.contains(card)) {
             throw new IllegalArgumentException("Card already exists");
         }
         List<Card> newCards = new ArrayList<>(this.cards);
@@ -34,7 +36,7 @@ public class Hand {
 
     public int score() {
         int total = 0;
-        int aces  = 0;
+        int aces = 0;
 
         for (Card card : cards) {
             total += card.value();
@@ -54,6 +56,6 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score() == 21;
+        return cards.size() == 2 && score() == 21;
     }
 }
