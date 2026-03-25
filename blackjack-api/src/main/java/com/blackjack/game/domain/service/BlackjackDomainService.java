@@ -70,7 +70,8 @@ public class BlackjackDomainService {
     private GameStatus from(Hand dealer, Hand player) {
         if (player.isBlackjack() && dealer.isBlackjack()) return DRAW;
         if (player.isBlackjack()) return PLAYER_WINS;
-        if (dealer.isBlackjack() || player.isBust()) return DEALER_WINS;
+        if (dealer.isBlackjack()) return DEALER_WINS;
+        if (player.isBust()) return DEALER_WINS;
         return IN_PROGRESS;
     }
 }

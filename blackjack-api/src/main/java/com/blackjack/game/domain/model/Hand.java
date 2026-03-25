@@ -3,6 +3,7 @@ package com.blackjack.game.domain.model;
 import com.blackjack.game.domain.model.valueObject.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -56,6 +57,10 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && score() == 21;
+        return score() == 21;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
