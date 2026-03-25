@@ -23,6 +23,11 @@ public class GameBuilder {
         this.status = currentGame.getStatus();
     }
 
+    public GameBuilder (String playerId) {
+        this.id = null;
+        this.playerId = playerId;
+    }
+
     public GameBuilder withPlayerHand(Hand playerHand) {
         this.playerHand = playerHand;
         return this;
@@ -44,6 +49,6 @@ public class GameBuilder {
     }
 
     public Game build() {
-        return new Game(id, playerId, dealerHand, playerHand, deck, status);
+        return Game.create(id, playerId, dealerHand, playerHand, deck, status);
     }
 }
