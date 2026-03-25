@@ -13,14 +13,14 @@ import static com.blackjack.game.domain.model.valueObject.GameStatus.*;
 
 public class BlackjackDomainService {
 
-    public Game dealInitialCards(Game game) {
+    public Game dealInitialCards(String playerId) {
         Deck.DealResult deckAndCarts = Deck.fullShuffled().deal(4);
         List<Card> cards = deckAndCarts.cards();
 
         Hand dealerHand = Hand.of(cards.get(0), cards.get(2));
         Hand playerHand = Hand.of(cards.get(1), cards.get(3));
 
-        return new GameBuilder(game)
+        return new GameBuilder(playerId)
                 .withDeck(deckAndCarts.remainingDeck())
                 .withDealerHand(dealerHand)
                 .withPlayerHand(playerHand)
