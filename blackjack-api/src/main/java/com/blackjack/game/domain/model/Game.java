@@ -15,8 +15,8 @@ public class Game {
     private Deck deck;
     private GameStatus status;
 
-    public Game(String id, String playerId, Hand dealerHand, Hand playerHand, Deck deck, GameStatus status) {
-        this.id = id;
+    private Game(String id, String playerId, Hand dealerHand, Hand playerHand, Deck deck, GameStatus status) {
+        this.id = id.isBlank() ? createGameId() : id;
         this.playerId = playerId;
         this.dealerHand = dealerHand;
         this.playerHand = playerHand;
@@ -24,15 +24,12 @@ public class Game {
         this.status = status;
     }
 
-    public static Game create(String playerId, Hand playerHand,
-                              Hand dealerHand, Deck deck) {
-        return new Game(
-                UUID.randomUUID().toString(),
-                playerId,
-                playerHand,
-                dealerHand,
-                deck,
-                GameStatus.IN_PROGRESS);
+    public static Game create(String id, String playerId, Hand dealerHand, Hand playerHand, Deck deck, GameStatus status) {
+        return new Game(id, playerId, dealerHand, playerHand, deck, status);
+    }
+
+    private String createGameId() {
+        return UUID.randomUUID().toString();
     }
 
     public String getId() {
