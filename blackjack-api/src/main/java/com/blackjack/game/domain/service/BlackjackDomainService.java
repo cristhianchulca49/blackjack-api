@@ -3,10 +3,10 @@ package com.blackjack.game.domain.service;
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.Hand;
 import com.blackjack.game.domain.model.builder.GameBuilder;
+import com.blackjack.game.domain.model.exception.GameAlreadyFinishedException;
 import com.blackjack.game.domain.model.valueObject.Card;
 import com.blackjack.game.domain.model.valueObject.Deck;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
-import com.blackjack.shared.domain.exception.InvalidMoveException;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class BlackjackDomainService {
 
     public Game hit(Game game) {
         if (game.getStatus() != IN_PROGRESS) {
-            throw new InvalidMoveException("Cannot hit on a game with status: " + game.getStatus().name());
+            throw new GameAlreadyFinishedException();
         }
         Deck.DealResult deckAndCards = game.getDeck().deal(1);
         Hand playerHand = game.getPlayerHand().addCard(deckAndCards.cards().getFirst());
@@ -45,7 +45,7 @@ public class BlackjackDomainService {
 
     public Game stand(Game game) {
         if (game.getStatus() != IN_PROGRESS) {
-            throw new InvalidMoveException("Cannot stand on a game with status: " + game.getStatus().name());
+            throw new GameAlreadyFinishedException();
         }
         return resolveDealerTurn(game);
     }

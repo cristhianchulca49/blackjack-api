@@ -1,5 +1,6 @@
 package com.blackjack.game.domain.model;
 
+import com.blackjack.game.domain.model.exception.HandInvalidException;
 import com.blackjack.game.domain.model.valueObject.Card;
 
 import java.util.ArrayList;
@@ -15,20 +16,20 @@ public class Hand {
 
     public static Hand of(Card card1, Card card2) {
         if (card1 == null || card2 == null) {
-            throw new IllegalArgumentException("Cards cannot be null");
+            throw new HandInvalidException("Cards cannot be null");
         }
         if(card1.equals(card2)) {
-            throw new IllegalArgumentException("Cards cannot be the same");
+            throw new HandInvalidException("Cards cannot be the same");
         }
         return new Hand(List.of(card1, card2));
     }
 
     public Hand addCard(Card card) {
         if (card == null) {
-            throw new IllegalArgumentException("Card cannot be null");
+            throw new HandInvalidException("Card cannot be null");
         }
         if (cards.contains(card)) {
-            throw new IllegalArgumentException("Card already exists");
+            throw new HandInvalidException("Card already exists");
         }
         List<Card> newCards = new ArrayList<>(this.cards);
         newCards.add(card);
