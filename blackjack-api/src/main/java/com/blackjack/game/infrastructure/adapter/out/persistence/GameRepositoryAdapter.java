@@ -23,9 +23,7 @@ public class GameRepositoryAdapter implements GameRepositoryPort {
     @Override
     public Mono<Game> save(Game game) {
 
-        return Mono.just(game)
-                .map(GameMapper::toDocument)
-                .flatMap(gameMongoRepository::save)
+        return gameMongoRepository.save(GameMapper.toDocument(game))
                 .map(GameMapper::toDomain)
                 .onErrorMap(this::handleDatabaseError);
     }
@@ -58,6 +56,6 @@ public class GameRepositoryAdapter implements GameRepositoryPort {
 
     private Throwable handleDatabaseError(Throwable ex) {
         if (ex instanceof DomainException) return ex;
-        return new DatabaseException("Database failure while saving game");
+        return new DatabaseException("Database failure while saving game, error: " + ex.getMessage());
     }
 }
