@@ -1,5 +1,7 @@
 package com.blackjack.game.domain.model.valueObject;
 
+import com.blackjack.game.domain.model.exception.DeckInvalidException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,10 +26,10 @@ public class Deck {
 
     public DealResult deal(int count) {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("Deck is empty");
+            throw new DeckInvalidException("Deck is empty");
         }
         if (count > cards.size()) {
-            throw new IllegalArgumentException("Not enough cards in deck: requested " + count + ", available " + cards.size());
+            throw new DeckInvalidException("Not enough cards in deck: requested " + count + ", available " + cards.size());
         }
         List<Card> dealtCards = cards.subList(0, count);
         List<Card> remaining = cards.subList(count, cards.size());

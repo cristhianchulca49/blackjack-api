@@ -1,4 +1,4 @@
-package com.blackjack.shared.domain.exception;
+package com.blackjack.shared.application.exception;
 
 public class GameNotFoundException extends RuntimeException {
     

@@ -1,7 +1,7 @@
 package com.blackjack.player.domain.model;
 
 
-import com.blackjack.shared.domain.exception.InvalidNameException;
+import com.blackjack.player.domain.model.exception.InvalidNameException;
 
 public class Name {
 

@@ -1,6 +1,9 @@
 package com.blackjack.game.domain.port.in;
 
 import com.blackjack.game.domain.model.Game;
+import com.blackjack.game.domain.model.exception.GameAlreadyFinishedException;
+import com.blackjack.game.domain.model.exception.InvalidMoveException;
+import com.blackjack.shared.application.exception.GameNotFoundException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,9 +27,9 @@ public interface PlayGameUseCase {
      * @param gameId the ID of the game
      * @param action the action to play: "HIT" or "STAND"
      * @return Mono<Game> the updated game after action
-     * @throws com.blackjack.shared.domain.exception.GameNotFoundException if game not found
-     * @throws com.blackjack.shared.domain.exception.GameAlreadyFinishedException if game is finished
-     * @throws com.blackjack.shared.domain.exception.InvalidMoveException if action is invalid
+     * @throws GameNotFoundException if game not found
+     * @throws GameAlreadyFinishedException if game is finished
+     * @throws InvalidMoveException if action is invalid
      */
     Mono<Game> execute(String gameId, String action);
 }
