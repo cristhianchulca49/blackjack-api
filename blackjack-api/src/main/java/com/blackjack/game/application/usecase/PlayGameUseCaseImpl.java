@@ -1,15 +1,15 @@
 package com.blackjack.game.application.usecase;
 
 import com.blackjack.game.domain.model.Game;
-import com.blackjack.game.domain.model.exception.DomainException;
 import com.blackjack.game.domain.model.exception.InvalidMoveException;
 import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.game.domain.port.in.PlayGameUseCase;
 import com.blackjack.game.domain.port.out.GameRepositoryPort;
 import com.blackjack.game.domain.service.BlackjackDomainService;
-import com.blackjack.shared.application.exception.GameNotFoundException;
+import com.blackjack.shared.application.exception.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
+@Service
 public class PlayGameUseCaseImpl implements PlayGameUseCase {
     private final GameRepositoryPort gameRepositoryPort;
     private final BlackjackDomainService blackjackDomainService;
@@ -22,7 +22,7 @@ public class PlayGameUseCaseImpl implements PlayGameUseCase {
     @Override
     public Mono<Game> execute(GameId gameId, String action) {
         return gameRepositoryPort.findById(gameId.getValue())
-                .switchIfEmpty(Mono.error(new GameNotFoundException(gameId.getValue())))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Game", gameId.getValue())))
                 .flatMap(game -> applyAction(action, game))
                 .flatMap(gameRepositoryPort::save);
 

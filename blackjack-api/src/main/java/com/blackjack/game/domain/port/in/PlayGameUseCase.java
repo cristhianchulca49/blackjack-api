@@ -4,7 +4,7 @@ import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.exception.GameAlreadyFinishedException;
 import com.blackjack.game.domain.model.exception.InvalidMoveException;
 import com.blackjack.game.domain.model.valueObject.GameId;
-import com.blackjack.shared.application.exception.GameNotFoundException;
+import com.blackjack.shared.application.exception.ResourceNotFoundException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -28,7 +28,7 @@ public interface PlayGameUseCase {
      * @param gameId the ID of the game
      * @param action the action to play: "HIT" or "STAND"
      * @return Mono<Game> the updated game after action
-     * @throws GameNotFoundException if game not found
+     * @throws ResourceNotFoundException if game not found
      * @throws GameAlreadyFinishedException if game is finished
      * @throws InvalidMoveException if action is invalid
      */

@@ -2,7 +2,7 @@ package com.blackjack.game.domain.port.in;
 
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.valueObject.GameId;
-import com.blackjack.shared.application.exception.GameNotFoundException;
+import com.blackjack.shared.application.exception.ResourceNotFoundException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -23,7 +23,7 @@ public interface GetGameUseCase {
      * 
      * @param gameId the ID of the game to retrieve
      * @return Mono<Game> the game
-     * @throws GameNotFoundException if game not found
+     * @throws ResourceNotFoundException if game not found
      */
     Mono<Game> execute(GameId gameId);
 }

@@ -7,7 +7,7 @@ import com.blackjack.game.domain.port.out.GameRepositoryPort;
 import com.blackjack.game.domain.service.BlackjackDomainService;
 import com.blackjack.player.domain.model.PlayerId;
 import com.blackjack.player.domain.port.out.PlayerRepositoryPort;
-import com.blackjack.shared.application.exception.PlayerNotFoundException;
+import com.blackjack.shared.application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -28,11 +28,11 @@ public class CreateGameUseCaseImpl implements CreateGameUseCase {
     @Override
     public Mono<Game> execute(PlayerId playerId) {
         return playerRepositoryPort.findById(playerId.getValue())
-                .switchIfEmpty(Mono.error(new PlayerNotFoundException(playerId.getValue())))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Player", playerId.getValue())))
                 .flatMap(player ->
                         Mono.fromCallable(() -> blackjackDomainService.dealInitialCards(playerId))
                                 .onErrorMap(
-                                        ex -> !(ex instanceof PlayerNotFoundException),
+                                        ex -> !(ex instanceof ResourceNotFoundException),
                                         ex -> new DomainException(ex.getMessage())
                                 )
                                 .flatMap(gameRepositoryPort::save)
