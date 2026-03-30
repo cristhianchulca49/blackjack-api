@@ -27,11 +27,8 @@ public class Game {
     }
 
     public static Game create(GameId id, PlayerId playerId, Hand dealerHand, Hand playerHand, Deck deck, GameStatus status) {
+        if (id == null) id = GameId.generate();
         return new Game(id, playerId, dealerHand, playerHand, deck, status);
-    }
-
-    private String createGameId() {
-        return UUID.randomUUID().toString();
     }
 
     public GameId getId() {

@@ -18,10 +18,6 @@ public class PlayerId {
         return new PlayerId(UUID.randomUUID().toString());
     }
 
-    public static PlayerId of(String value) {
-        return new PlayerId(value);
-    }
-
     public String getValue() {
         return value;
     }
