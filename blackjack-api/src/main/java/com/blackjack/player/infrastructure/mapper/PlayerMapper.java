@@ -8,16 +8,16 @@ import com.blackjack.player.infrastructure.adapter.out.persistence.entity.Player
 public class PlayerMapper {
 
     public static PlayerEntity toEntity(Player player) {
-        return new PlayerEntity(
-                player.getPlayerId().getValue(),
-                player.getName().getValue()
-        );
+        return PlayerEntity.builder()
+                .id(player.getPlayerId().getValue())
+                .name(player.getName().toString())
+                .build();
     }
 
-    public static Player toDomain(PlayerEntity entity) {
-        return new Player(
-                PlayerId.of(entity.getId()),
-                Name.of(entity.getName())
+    public static Player toDomain(PlayerEntity playerEntity) {
+        return Player.reconstitute(
+                PlayerId.reconstitute(playerEntity.getId()),
+                Name.of(playerEntity.getName())
         );
     }
 }

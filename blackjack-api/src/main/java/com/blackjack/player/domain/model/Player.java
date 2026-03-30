@@ -1,9 +1,6 @@
 package com.blackjack.player.domain.model;
 
-
-import java.util.UUID;
-
-public class Player{
+public class Player {
     private final PlayerId playerId;
     private Name name;
 
@@ -17,6 +14,10 @@ public class Player{
         return new Player(PlayerId.generate(), Name.of(name));
     }
 
+    public static Player reconstitute(PlayerId playerId, Name name) {
+        return new Player(playerId, name);
+    }
+
     public Player changeName(String newName) {
         return new Player(this.playerId, Name.of(newName));
     }
@@ -24,6 +25,7 @@ public class Player{
     public Name getName() {
         return this.name;
     }
+
     public PlayerId getPlayerId() {
         return this.playerId;
     }
