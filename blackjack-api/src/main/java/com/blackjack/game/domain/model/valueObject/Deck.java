@@ -38,4 +38,12 @@ public class Deck {
 
     public record DealResult(List<Card> cards, Deck remainingDeck) {
     }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public static Deck reconstitute(List<Card> cards) {
+        return new Deck(cards);
+    }
 }

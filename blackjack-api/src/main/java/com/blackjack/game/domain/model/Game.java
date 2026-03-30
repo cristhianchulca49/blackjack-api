@@ -31,6 +31,10 @@ public class Game {
         return new Game(id, playerId, dealerHand, playerHand, deck, status);
     }
 
+    public static Game from(GameId id, PlayerId playerId, Hand dealerHand, Hand playerHand, Deck deck, GameStatus status) {
+        return new Game(id, playerId, dealerHand, playerHand, deck, status);
+    }
+
     public GameId getId() {
         return id;
     }

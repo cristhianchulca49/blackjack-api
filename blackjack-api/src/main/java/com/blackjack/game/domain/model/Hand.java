@@ -18,7 +18,7 @@ public class Hand {
         if (card1 == null || card2 == null) {
             throw new HandInvalidException("Cards cannot be null");
         }
-        if(card1.equals(card2)) {
+        if (card1.equals(card2)) {
             throw new HandInvalidException("Cards cannot be the same");
         }
         return new Hand(List.of(card1, card2));
@@ -34,6 +34,10 @@ public class Hand {
         List<Card> newCards = new ArrayList<>(this.cards);
         newCards.add(card);
         return new Hand(newCards);
+    }
+
+    public static Hand reconstitute(List<Card> cards) {
+        return new Hand(List.copyOf(cards));
     }
 
     public int score() {
