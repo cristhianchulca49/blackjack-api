@@ -1,5 +1,6 @@
 package com.blackjack.game.domain.port.in;
 
+import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.shared.application.exception.GameNotFoundException;
 import reactor.core.publisher.Mono;
 
@@ -22,6 +23,6 @@ public interface DeleteGameUseCase {
      * @return Mono<Void> completion signal
      * @throws GameNotFoundException if game not found
      */
-    Mono<Void> execute(String gameId);
+    Mono<Void> execute(GameId gameId);
 }
 

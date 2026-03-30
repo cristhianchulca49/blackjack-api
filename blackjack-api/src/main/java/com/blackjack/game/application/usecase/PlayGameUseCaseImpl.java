@@ -3,6 +3,7 @@ package com.blackjack.game.application.usecase;
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.exception.DomainException;
 import com.blackjack.game.domain.model.exception.InvalidMoveException;
+import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.game.domain.port.in.PlayGameUseCase;
 import com.blackjack.game.domain.port.out.GameRepositoryPort;
 import com.blackjack.game.domain.service.BlackjackDomainService;
@@ -19,9 +20,9 @@ public class PlayGameUseCaseImpl implements PlayGameUseCase {
     }
 
     @Override
-    public Mono<Game> execute(String gameId, String action) {
-        return gameRepositoryPort.findById(gameId)
-                .switchIfEmpty(Mono.error(new GameNotFoundException(gameId)))
+    public Mono<Game> execute(GameId gameId, String action) {
+        return gameRepositoryPort.findById(gameId.getValue())
+                .switchIfEmpty(Mono.error(new GameNotFoundException(gameId.getValue())))
                 .flatMap(game -> applyAction(action, game))
                 .flatMap(gameRepositoryPort::save);
 

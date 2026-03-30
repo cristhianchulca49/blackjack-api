@@ -3,11 +3,13 @@ package com.blackjack.game.domain.model.builder;
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.Hand;
 import com.blackjack.game.domain.model.valueObject.Deck;
+import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
+import com.blackjack.player.domain.model.PlayerId;
 
 public class GameBuilder {
-    private final String id;
-    private final String playerId;
+    private final GameId id;
+    private final PlayerId playerId;
 
     private Hand dealerHand;
     private Hand playerHand;
@@ -23,7 +25,7 @@ public class GameBuilder {
         this.status = currentGame.getStatus();
     }
 
-    public GameBuilder (String playerId) {
+    public GameBuilder (PlayerId playerId) {
         this.id = null;
         this.playerId = playerId;
     }
