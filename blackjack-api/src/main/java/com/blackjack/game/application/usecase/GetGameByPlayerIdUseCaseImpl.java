@@ -9,6 +9,7 @@ import com.blackjack.shared.application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 @Service
 public class GetGameByPlayerIdUseCaseImpl implements GetGameByPlayerIdUseCase {
     private final GameRepositoryPort gameRepositoryPort;
@@ -22,7 +23,7 @@ public class GetGameByPlayerIdUseCaseImpl implements GetGameByPlayerIdUseCase {
     @Override
     public Flux<Game> execute(PlayerId playerId) {
         return playerRepositoryPort.findById(playerId.getValue())
-                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Player", playerId.getValue())))
-                .flatMapMany(player -> gameRepositoryPort.findByPlayerId(playerId.getValue()));
+                .switchIfEmpty(Mono.error(() -> new ResourceNotFoundException("Player", playerId.getValue())))
+                .flatMapMany(player -> gameRepositoryPort.findByPlayerId(playerId));
     }
 }

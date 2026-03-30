@@ -9,6 +9,7 @@ import com.blackjack.game.domain.service.BlackjackDomainService;
 import com.blackjack.shared.application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
 @Service
 public class PlayGameUseCaseImpl implements PlayGameUseCase {
     private final GameRepositoryPort gameRepositoryPort;
@@ -21,8 +22,8 @@ public class PlayGameUseCaseImpl implements PlayGameUseCase {
 
     @Override
     public Mono<Game> execute(GameId gameId, String action) {
-        return gameRepositoryPort.findById(gameId.getValue())
-                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Game", gameId.getValue())))
+        return gameRepositoryPort.findById(gameId)
+                .switchIfEmpty(Mono.error(() -> new ResourceNotFoundException("Game", gameId.getValue())))
                 .flatMap(game -> applyAction(action, game))
                 .flatMap(gameRepositoryPort::save);
 

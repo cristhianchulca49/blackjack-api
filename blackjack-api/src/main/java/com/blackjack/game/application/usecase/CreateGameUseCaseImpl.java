@@ -28,7 +28,7 @@ public class CreateGameUseCaseImpl implements CreateGameUseCase {
     @Override
     public Mono<Game> execute(PlayerId playerId) {
         return playerRepositoryPort.findById(playerId.getValue())
-                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Player", playerId.getValue())))
+                .switchIfEmpty(Mono.error(() -> new ResourceNotFoundException("Player", playerId.getValue())))
                 .flatMap(player ->
                         Mono.fromCallable(() -> blackjackDomainService.dealInitialCards(playerId))
                                 .onErrorMap(
