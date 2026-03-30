@@ -3,6 +3,7 @@ package com.blackjack.game.domain.port.in;
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.exception.GameAlreadyFinishedException;
 import com.blackjack.game.domain.model.exception.InvalidMoveException;
+import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.shared.application.exception.GameNotFoundException;
 import reactor.core.publisher.Mono;
 
@@ -31,6 +32,6 @@ public interface PlayGameUseCase {
      * @throws GameAlreadyFinishedException if game is finished
      * @throws InvalidMoveException if action is invalid
      */
-    Mono<Game> execute(String gameId, String action);
+    Mono<Game> execute(GameId gameId, String action);
 }
 

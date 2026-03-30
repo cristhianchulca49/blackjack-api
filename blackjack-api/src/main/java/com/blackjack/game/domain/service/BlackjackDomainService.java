@@ -7,6 +7,7 @@ import com.blackjack.game.domain.model.exception.GameAlreadyFinishedException;
 import com.blackjack.game.domain.model.valueObject.Card;
 import com.blackjack.game.domain.model.valueObject.Deck;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
+import com.blackjack.player.domain.model.PlayerId;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import static com.blackjack.game.domain.model.valueObject.GameStatus.*;
 
 public class BlackjackDomainService {
 
-    public Game dealInitialCards(String playerId) {
+    public Game dealInitialCards(PlayerId playerId) {
         Deck.DealResult deckAndCards = Deck.fullShuffled().deal(4);
         List<Card> cards = deckAndCards.cards();
 

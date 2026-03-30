@@ -1,6 +1,7 @@
 package com.blackjack.game.domain.port.in;
 
 import com.blackjack.game.domain.model.Game;
+import com.blackjack.player.domain.model.PlayerId;
 import reactor.core.publisher.Mono;
 
 /**
@@ -22,6 +23,6 @@ public interface CreateGameUseCase {
      * @param playerId the ID of the player starting the game
      * @return Mono<Game> the created game with initial cards dealt
      */
-    Mono<Game> execute(String playerId);
+    Mono<Game> execute(PlayerId playerId);
 }
 

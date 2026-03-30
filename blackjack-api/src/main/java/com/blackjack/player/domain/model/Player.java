@@ -4,17 +4,17 @@ package com.blackjack.player.domain.model;
 import java.util.UUID;
 
 public class Player{
-    private final String playerId;
+    private final PlayerId playerId;
     private Name name;
 
 
-    private Player(String playerId, Name name) {
+    private Player(PlayerId playerId, Name name) {
         this.playerId = playerId;
         this.name = name;
     }
 
     public static Player create(String name) {
-        return new Player(UUID.randomUUID().toString(), Name.of(name));
+        return new Player(PlayerId.generate(), Name.of(name));
     }
 
     public Player changeName(String newName) {
@@ -24,7 +24,7 @@ public class Player{
     public Name getName() {
         return this.name;
     }
-    public String getPlayerId() {
+    public PlayerId getPlayerId() {
         return this.playerId;
     }
 
