@@ -4,8 +4,9 @@ import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.game.domain.port.in.DeleteGameUseCase;
 import com.blackjack.game.domain.port.out.GameRepositoryPort;
 import com.blackjack.shared.application.exception.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
+@Service
 public class DeleteGameUseCaseImpl implements DeleteGameUseCase {
     private final GameRepositoryPort gameRepositoryPort;
 
