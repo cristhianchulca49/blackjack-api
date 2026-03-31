@@ -1,6 +1,7 @@
 package com.blackjack.game.infrastructure.mapper;
 
 import com.blackjack.game.domain.model.valueObject.Deck;
+import com.blackjack.game.infrastructure.adapter.in.rest.dto.response.DeckResponse;
 import com.blackjack.game.infrastructure.adapter.out.persistence.document.DeckDocument;
 
 public class DeckMapper {
@@ -13,6 +14,12 @@ public class DeckMapper {
     public static Deck toDomain(DeckDocument deckDocument) {
         return Deck.reconstitute(deckDocument.cards().stream()
                 .map(CardMapper::toDomain)
+                .toList());
+    }
+
+    public static DeckResponse toResponse(Deck deck) {
+        return new DeckResponse(deck.getCards().stream()
+                .map(CardMapper::toResponse)
                 .toList());
     }
 }

@@ -3,6 +3,7 @@ package com.blackjack.game.infrastructure.mapper;
 import com.blackjack.game.domain.model.Game;
 import com.blackjack.game.domain.model.valueObject.GameId;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
+import com.blackjack.game.infrastructure.adapter.in.rest.dto.response.GameResponse;
 import com.blackjack.game.infrastructure.adapter.out.persistence.document.GameDocument;
 import com.blackjack.player.domain.model.PlayerId;
 
@@ -26,5 +27,17 @@ public class GameMapper {
                 HandMapper.toDomain(gameDocument.getDealerHand()),
                 DeckMapper.toDomain(gameDocument.getDeck()),
                 GameStatus.valueOf(gameDocument.getStatus()));
+    }
+
+    public static GameResponse toResponse(Game game) {
+        boolean hideDealerSecondCard = game.getStatus() == GameStatus.IN_PROGRESS;
+        return new GameResponse(
+                game.getId().getValue(),
+                game.getPlayerId().toString(),
+                HandMapper.toResponse(game.getPlayerHand(), false),
+                HandMapper.toResponse(game.getDealerHand(), hideDealerSecondCard),
+                DeckMapper.toResponse(game.getDeck()),
+                game.getStatus().name()
+        );
     }
 }
