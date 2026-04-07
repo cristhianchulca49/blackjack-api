@@ -53,7 +53,7 @@ public class GameController {
             @Valid @RequestBody PlayGameRequest request
     ) {
         return Mono.just(GameId.reconstitute(id))
-                .flatMap(gameId -> playGameUseCase.execute(gameId, request.getAction()))
+                .flatMap(gameId -> playGameUseCase.execute(gameId, request.action()))
                 .map(game -> ResponseEntity.ok(GameMapper.toResponse(game)));
     }
 
