@@ -47,18 +47,6 @@ public class Ranking {
         return new Ranking(id, playerId, playerName, wins, draws, score, position);
     }
 
-    public Ranking withWins(Wins newWins) {
-        return new Ranking(this.id, this.playerId, this.playerName, newWins, this.draws, Score.calculate(newWins, this.draws), this.position);
-    }
-
-    public Ranking withDraws(Draws newDraws) {
-        return new Ranking(this.id, this.playerId, this.playerName, this.wins, newDraws, Score.calculate(this.wins, newDraws), this.position);
-    }
-
-    public Ranking withPosition(Position newPosition) {
-        return new Ranking(this.id, this.playerId, this.playerName, this.wins, this.draws, this.score, newPosition);
-    }
-
     public Ranking incrementWins() {
         Wins newWins = this.wins.increment();
         Draws currentDraws = this.draws;

@@ -8,6 +8,7 @@ import com.blackjack.ranking.domain.model.valueObject.Position;
 import com.blackjack.ranking.domain.model.valueObject.RankingId;
 import com.blackjack.ranking.domain.model.valueObject.Score;
 import com.blackjack.ranking.domain.model.valueObject.Wins;
+import com.blackjack.ranking.infrastructure.adapter.in.rest.dto.response.RankingResponse;
 import com.blackjack.ranking.infrastructure.adapter.out.persistence.entity.RankingEntity;
 
 public class RankingMapper {
@@ -34,6 +35,15 @@ public class RankingMapper {
                 Score.of(rankingEntity.getScore()),
                 Position.of(rankingEntity.getPosition())
         );
+    }
+
+    public static RankingResponse toResponse(Ranking ranking) {
+        return RankingResponse.builder()
+                .position(ranking.getPosition().getValue())
+                .username(ranking.getPlayerName().toString())
+                .totalWins(ranking.getWins().getValue())
+                .totalDraws(ranking.getDraws().getValue())
+                .build();
     }
 }
 

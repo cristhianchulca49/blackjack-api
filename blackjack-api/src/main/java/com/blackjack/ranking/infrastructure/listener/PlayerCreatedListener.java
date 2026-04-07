@@ -1,21 +1,19 @@
 package com.blackjack.ranking.infrastructure.listener;
 
 import com.blackjack.player.domain.event.PlayerCreatedEvent;
-import com.blackjack.ranking.domain.model.Ranking;
 import com.blackjack.ranking.domain.port.in.CreateRankingUseCase;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
-import static reactor.netty.http.HttpConnectionLiveness.log;
-
+@Slf4j
 @Async
 @Component
 public class PlayerCreatedListener {
