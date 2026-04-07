@@ -1,0 +1,11 @@
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///blackjack_db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # Esto crea las tablas al iniciar el test y las borra al terminar
+      ddl-auto: create-drop
+    show-sql: true # Útil para debuguear tus tests
