@@ -1,42 +1,54 @@
 services:
-
-  mongodb:
-    image: mongo:8.0
-    container_name: blackjack-mongo
-    restart: unless-stopped
+  app:
+    build: .
+    container_name: blackjack-api
     ports:
-      - "27017:27017"
+      - "8080:8080"
     environment:
-      MONGO_INITDB_DATABASE: blackjack
-    volumes:
-      - mongo_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - SPRING_R2DBC_URL=r2dbc:mysql://mysql-db:3306/blackjack
+      - SPRING_R2DBC_USERNAME=root
+      - SPRING_R2DBC_PASSWORD=root
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/blackjack
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+    networks:
+      - blackjack-network
 
-  mysql:
-    image: mysql:9.1
-    container_name: blackjack-mysql
-    restart: unless-stopped
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      - MYSQL_DATABASE=blackjack
+      - MYSQL_ROOT_PASSWORD=root
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS:-secret}
-      MYSQL_DATABASE: blackjack_players
-      MYSQL_USER: ${DB_USER:-blackjack}
-      MYSQL_PASSWORD: ${DB_PASS:-secret}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS:-secret}"]
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s
+    networks:
+      - blackjack-network
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - blackjack-network
+
+networks:
+  blackjack-network:
+    driver: bridge
 
 volumes:
-  mongo_data:
   mysql_data:
+  mongo_data:

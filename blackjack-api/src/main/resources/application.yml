@@ -2,25 +2,19 @@ spring:
   application:
     name: blackjack-api
 
-  # MongoDB ? desactivado hasta Meta 0.3
+  r2dbc:
+    url: ${SPRING_R2DBC_URL:r2dbc:h2:mem:///testdb;DB_CLOSE_DELAY=-1}
+    username: ${SPRING_R2DBC_USERNAME:sa}
+    password: ${SPRING_R2DBC_PASSWORD:}
+
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb://localhost:27017/blackjack}
-      auto-index-creation: true
-
-  # R2DBC MySQL ? desactivado hasta Meta 0.3
-  r2dbc:
-    url: ${R2DBC_URL:r2dbc:mysql://localhost:3306/blackjack_players}
-    username: ${DB_USER:root}
-    password: ${DB_PASS:secret}
-
-  # Evita que falle al arrancar sin las BBDDs (hasta Meta 0.3)
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration
-      - org.springframework.boot.autoconfigure.mongo.ReactiveMongoAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.mongo.ReactiveMongoRepositoriesAutoConfiguration
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/blackjack}
+    r2dbc:
+      repositories:
+        enabled: true
+    repositories:
+      enabled: true
 
 server:
   port: ${PORT:8080}

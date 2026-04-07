@@ -1,8 +1,14 @@
-  target/
-  .git/
-  .idea/
-  *.iml
-  .env
-  .DS_Store
-  *.log
-  logs/
+target/
+.git
+.env
+.idea
+.vscode
+*.iml
+*.log
+mvnw
+mvnw.cmd
+.mvn/
+Dockerfile
+docker-compose.yml
+README.md
+HELP.md
