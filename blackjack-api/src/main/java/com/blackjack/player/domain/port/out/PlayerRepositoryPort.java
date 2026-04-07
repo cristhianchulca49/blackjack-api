@@ -11,4 +11,6 @@ public interface PlayerRepositoryPort {
     Mono<Player> findById(PlayerId playerId);
 
     Mono<Void> deleteById(PlayerId playerId);
+
+    Mono<Boolean> existsByName(String name);
 }

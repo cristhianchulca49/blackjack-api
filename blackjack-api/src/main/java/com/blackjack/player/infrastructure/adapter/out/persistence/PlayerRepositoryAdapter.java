@@ -41,6 +41,12 @@ public class PlayerRepositoryAdapter implements PlayerRepositoryPort {
                 .onErrorMap(this::handleDatabaseError);
     }
 
+    @Override
+    public Mono<Boolean> existsByName(String name) {
+        return playerR2dbcRepository.existsByName(name)
+                .onErrorMap(this::handleDatabaseError);
+    }
+
     private Throwable handleDatabaseError(Throwable ex) {
         if (ex instanceof DomainException) return ex;
         return new DatabaseException("Database failure while persisting player, error: " + ex.getMessage() );

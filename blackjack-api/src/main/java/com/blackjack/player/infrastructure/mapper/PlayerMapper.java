@@ -29,11 +29,8 @@ public class PlayerMapper {
         );
     }
 
-    public static PlayerResponse toResponse(PlayerEntity playerEntity) {
-        return PlayerResponse.builder()
-                .id(playerEntity.getId())
-                .name(playerEntity.getName())
-                .build();
+    public static PlayerResponse toResponse(Player player) {
+        return new PlayerResponse(player.getPlayerId().getValue(), player.getName().toString());
     }
 }
 
