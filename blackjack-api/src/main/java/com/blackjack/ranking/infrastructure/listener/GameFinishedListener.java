@@ -3,6 +3,7 @@ package com.blackjack.ranking.infrastructure.listener;
 import com.blackjack.game.domain.event.GameFinishedEvent;
 import com.blackjack.game.domain.model.valueObject.GameStatus;
 import com.blackjack.ranking.domain.port.in.UpdateRankingEntryUseCase;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Async;
@@ -12,8 +13,7 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
-import static reactor.netty.http.HttpConnectionLiveness.log;
-
+@Slf4j
 @Async
 @Component
 public class GameFinishedListener {
