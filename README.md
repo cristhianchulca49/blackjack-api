@@ -297,8 +297,8 @@ Stage 2 (runtime)  →  eclipse-temurin:21-jre-alpine
                        copies: only the fat JAR
                        final image size: ~180MB
 ```
-
----
-
-
+### DockerHub link
+``` bash
+https://hub.docker.com/r/cristhianchulca/blackjack-api
+```
 ---
